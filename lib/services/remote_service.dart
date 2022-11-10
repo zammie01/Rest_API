@@ -1,16 +1,18 @@
-import 'package:api/models/posts.dart';
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class RemoteService {
-  Future<List<Post>?> getPosts() async {
+  static getPosts() async {
     var client = http.Client();
 
-    var uri = Uri.parse('https://jsonplaceholder.typicode.com/posts');
+    var uri = Uri.parse(
+        'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=5640d00c8bad4178ba6c0f733d304a2a');
     var response = await client.get(uri);
 
     if (response.statusCode == 200) {
-      var json = response.body;
-      return postFromJson(json);
+      var json = jsonDecode(response.body);
+      return json;
     }
   }
 }
